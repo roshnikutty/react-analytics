@@ -1,6 +1,7 @@
 // import curl from 'curl';
 import $ from 'jquery';
 import fetchJsonp from 'fetch-jsonp';
+import unirest from 'unirest';
 import { fromByteArray } from 'base64-js';
 import { TextEncoder } from 'text-encoding';
 
@@ -30,25 +31,28 @@ export const getAnalytics = () => {
     //Thunk function
     console.log(token)
     return function (dispatch) {
-        return fetch("https://api.localytics.com/v1/apps?api_key=API_KEY&api_secret=API_SECRET", {
-            method: 'GET',
-            headers: {
-                'Authorization': `Basic ${token}`,
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Accept':'application/json'
-            },
-            mode: 'no-cors'
-        }).then(res => {
-            return res.json()
-        })
-        .then((analyticsJson) => {
-            console.log(analyticsJson)
-            dispatch(getAnalyticsSuccess(analyticsJson))
-        })
-        .catch(err =>
-            console.log(`Error while running getAnalytics: ${err}`)
-            )
+        return 
+        // return fetch("https://api.localytics.com/v1/apps?api_key=API_KEY&api_secret=API_SECRET", {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Basic ${token}`,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'Content-Type': 'application/json',
+        //         'Accept':'application/json'
+        //     },
+        //     mode: 'no-cors'
+        // }).then(res => {
+        //     console.log(res)
+        //     return res.json()
+        // })
+        // .then((analyticsJson) => {
+        //     console.log(analyticsJson)
+        //     dispatch(getAnalyticsSuccess(analyticsJson))
+        // })
+        // .catch(err =>
+        //     console.log(`Error while running getAnalytics: ${err}`)
+        //     )
+        //=====================    
         // .catch(err =>
         //     console.log(`Error while running getAnalytics: ${err}`)
         //     )
@@ -119,7 +123,7 @@ export const getAnalytics = () => {
         //     //   "postman-token": "ddf094dd-1ccc-ad64-a857-451ec187d0fa"
         //     }
         //   }
-          
+
         //   $.ajax(settings).done(function (response) {
         //     console.log(response);
         //   });
