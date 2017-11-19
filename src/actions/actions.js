@@ -1,14 +1,14 @@
 // import curl from 'curl';
-import $ from 'jquery';
-import fetchJsonp from 'fetch-jsonp';
-import unirest from 'unirest';
+// import $ from 'jquery';
+// import fetchJsonp from 'fetch-jsonp';
+// import unirest from 'unirest';
 import { fromByteArray } from 'base64-js';
 import { TextEncoder } from 'text-encoding';
 
-global.fetchJsonp = fetchJsonp;
+// global.fetchJsonp = fetchJsonp;
+// const API_URL = `https://api.localytics.com/v1`;
 const api_key = `API_KEY`;
 const api_secret = `API_SECRET`;
-const API_URL = `https://api.localytics.com/v1`;
 
 //get current date;
 let currentDate = new Date().toISOString().substring(0, 10);
@@ -31,27 +31,26 @@ export const getAnalytics = () => {
     //Thunk function
     console.log(token)
     return function (dispatch) {
-        return 
-        // return fetch("https://api.localytics.com/v1/apps?api_key=API_KEY&api_secret=API_SECRET", {
-        //     method: 'GET',
-        //     headers: {
-        //         'Authorization': `Basic ${token}`,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Content-Type': 'application/json',
-        //         'Accept':'application/json'
-        //     },
-        //     mode: 'no-cors'
-        // }).then(res => {
-        //     console.log(res)
-        //     return res.json()
-        // })
-        // .then((analyticsJson) => {
-        //     console.log(analyticsJson)
-        //     dispatch(getAnalyticsSuccess(analyticsJson))
-        // })
-        // .catch(err =>
-        //     console.log(`Error while running getAnalytics: ${err}`)
-        //     )
+        return fetch("http://localhost:8080/", {
+            method: 'GET',
+            headers: {
+            //     'Authorization': `Basic ${token}`,
+                // 'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Accept':'application/json'
+            },
+            // mode: 'no-cors'
+        }).then(res => {
+            console.log(res)
+            return res.json()
+        })
+        .then((analyticsJson) => {
+            console.log(analyticsJson)
+            dispatch(getAnalyticsSuccess(analyticsJson))
+        })
+        .catch(err =>
+            console.log(`Error while running getAnalytics: ${err}`)
+            )
         //=====================    
         // .catch(err =>
         //     console.log(`Error while running getAnalytics: ${err}`)

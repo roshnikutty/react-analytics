@@ -1,7 +1,8 @@
-let {fromByteArray} = require('base64-js');
-let {TextEncoder} = require('text-encoding');
-
+let { fromByteArray } = require('base64-js');
+let { TextEncoder } = require('text-encoding');
 let unirest = require('unirest');
+const express = require('express');
+const app = express();
 const api_key = `API_KEY`;
 const api_secret = `API_SECRET`;
 
@@ -11,10 +12,9 @@ const base64EncodingUTF8 = str => {
     return b64Encoded;
 };
 const token = base64EncodingUTF8(`${api_key}:${api_secret}`);
-// let headers = new Headers();
 
-// headers.append('Authorization', 'Basic' + token);
-unirest.get('https://api.localytics.com/v1/apps')
+app.get('/', (request, clientResponse) => {
+    unirest.get('https://api.localytics.com/v1/apps')
     .headers({
         'Authorization': `Basic ${token}`,
         'Access-Control-Allow-Origin': '*',
@@ -22,7 +22,8 @@ unirest.get('https://api.localytics.com/v1/apps')
         'Content-Type': 'application/json'
     })
     .end(function (response) {
-        console.log(response.body._embedded.apps);
+        clientResponse.json(response.body._embedded.apps);
     });
-
-
+})
+app.listen(process.env.PORT || 8080, () => console.log(
+    `Your app is listening on port ${process.env.PORT || 8080}`));
